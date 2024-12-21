@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # Load the new model
 model = joblib.load ('LightGBM.pkl')
 # Load the test data from X_test.csv to create LIME explainer
-X_test = pd.read_csv('clinic_fill.csv')
+X_test = pd.read_csv('x_train.csv')
 # Define feature names from the new dataset
 feature_names =['Percentage of solid components',	'stages',	'boundary',	'lobulation',	'CEA'	,'SCC'	,'ith_score'	,'ith_sign']	
 
