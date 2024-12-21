@@ -36,8 +36,21 @@ options_stage = [
     "13 - T3N0M0",  
 ]  
 
-stages = st.selectbox("stages:", options=[0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13])  
-st.write("remarks：", options_stage)  
+stages = st.selectbox("stages（"0 - T2N0M0",  
+    "1 - T2N1M0",  
+    "2 - T2N2M0",  
+    "3 - T1N0M0",  
+    "4 - T1N2M0",  
+    "5 - T3N2M0",  
+    "6 - T1N1M0",  
+    "7 - T3N0M0",  
+    "8 - T2N0M1",  
+    "9 - T1N0M0",  
+    "10 - T1N0M1",  
+    "11 - T1N2M0",  
+    "12 - T2N0M0",  
+    "13 - T3N0M0",  ）:", options=[0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13])  
+
 boundary = st.selectbox("boundary:", options=[0, 1])
 lobulation = st.selectbox("lobulation:", options=[0, 1])
 CEA_value = st.number_input("CEA:",  min_value=0, max_value=10000, value=5)
