@@ -13,12 +13,30 @@ feature_names =['Percentage of solid components',	'stages',	'boundary',	'lobulat
 
 
 # Streamlit user interface
-st.title("气道播散")
+st.title("Prediction model of airway spread")
 # Age: numerical input
 Percentage = st.number_input ("Percentage of solid components:", min_value=0.0, max_value=1.0, value=0.5)
 # Sex: categorical selection
 # Chest Pain Type (ср): categorical selection
-stages = st.selectbox("stages:", options=[0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13])
+
+options_stage = [  
+    "0 - T2N0M0",  
+    "1 - T2N1M0",  
+    "2 - T2N2M0",  
+    "3 - T1N0M0",  
+    "4 - T1N2M0",  
+    "5 - T3N2M0",  
+    "6 - T1N1M0",  
+    "7 - T3N0M0",  
+    "8 - T2N0M1",  
+    "9 - T1N0M0",  
+    "10 - T1N0M1",  
+    "11 - T1N2M0",  
+    "12 - T2N0M0",  
+    "13 - T3N0M0",  
+]  
+
+selected_option = st.selectbox("stages:", options=options_stage)  
 boundary = st.selectbox("boundary:", options=[0, 1])
 lobulation = st.selectbox("lobulation:", options=[0, 1])
 CEA_value = st.number_input("CEA:",  min_value=0, max_value=10000, value=5)
@@ -41,8 +59,8 @@ if st.button("Predict"):
     probability = predicted_proba[predicted_class] * 100  
 
     if predicted_class == 1:  
-        advice = (f"根据模型预测，您患有心脏疾病的风险较高。")  
+        advice = (f"According to the model prediction, the risk of tumor airway dispersion is high.")  
     else:  
-        advice = (f"根据模型预测，您患有心脏疾病的风险较低。")  
+        advice = (f"According to the model prediction, the risk of tumor airway dispersal is low.")  
     
     st.write(advice)  
