@@ -73,9 +73,7 @@ explainer = shap.KernelExplainer(model.predict_proba, shap.sample(X_test, 1))
     # Calculate SHAP values  
 shap_values = explainer.shap_values(X_test)  
 shap_values2 = explainer(X_test)[:, :, 1]  
-    
-print('shap_values:', np.array(shap_values).shape)  
-print('shap_values2:', explainer(X_train_sel).shape)
+
 
 shap.force_plot(explainer.expected_value[0], shap_values[0][0], X_test.iloc[0, :], matplotlib=True)  
 
