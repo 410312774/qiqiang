@@ -36,7 +36,8 @@ options_stage = [
     "13 - T3N0M0",  
 ]  
 
-stages = st.selectbox("stages（"0 - T2N0M0",  
+stages = st.selectbox("stages（
+"0 - T2N0M0",  
     "1 - T2N1M0",  
     "2 - T2N2M0",  
     "3 - T1N0M0",  
