@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pa 
 import shap
 import pandas as pd
+import matplotlib.pyplot as plt
 # Load the new model
 model = joblib.load ('LightGBM.pkl')
 # Load the test data from X_test.csv to create LIME explainer
@@ -47,7 +48,7 @@ ith_sign = st.number_input ("ith_sign:", min_value=0.0, max_value=1.0, value=0.5
 
 feature_values = [Percentage, stages, boundary, lobulation, CEA_value, SCC_value, ith_score, ith_sign]
 features=np.array(feature_values)
-
+predicted_class=1
 if st.button("Predict"):  
     # 将 feature 数组从一维转为二维  
     features = features.reshape(1, -1)  
@@ -65,3 +66,16 @@ if st.button("Predict"):
         advice = (f"According to the model prediction, the risk of tumor airway dispersal is low.")  
     
     st.write(advice)  
+st.subheader("SHAP Force Plot Explanation")
+explainer_shap = shap.TreeExplainer (model)
+print('explainer_shap',explainer_shap.expected_value)
+shap_values = explainer_shap.shap_values(pd.DataFrame([feature_values], columns=feature_names))
+print('shap_values',shap_values)
+# Display the SHAP force plot for the predicted class
+if predicted_class == 1:
+    shap.force_plot(explainer_shap.expected_value[1], shap_values[1][0],pd.DataFrame([feature_values], columns=feature_names),matplotlib=True)
+else:
+    shap.force_plot(explainer_shap.expected_value[0], shap_values[0][0],pd.DataFrame([feature_values], columns=feature_names),
+                    matplotlib=True)
+plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
+st.image("shap_force_plot.png", caption='SHAP Force Plot Explanation')
