@@ -68,7 +68,7 @@ if st.button("Predict"):
     st.write(advice)  
 st.subheader("SHAP Force Plot Explanation")
 
-explainer = shap.KernelExplainer(model.predict_proba, shap.sample(X_train_sel, 1))  
+explainer = shap.KernelExplainer(model.predict_proba, shap.sample(X_test, 1))  
     
     # Calculate SHAP values  
 shap_values = explainer.shap_values(X_test)  
