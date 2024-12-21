@@ -67,15 +67,17 @@ if st.button("Predict"):
     
     st.write(advice)  
 st.subheader("SHAP Force Plot Explanation")
-explainer_shap = shap.TreeExplainer (model)
-print('explainer_shap',explainer_shap.expected_value)
-shap_values = explainer_shap.shap_values(pd.DataFrame([feature_values], columns=feature_names))
-print('shap_values',shap_values)
-# Display the SHAP force plot for the predicted class
-if predicted_class == 1:
-    shap.force_plot(explainer_shap.expected_value[1], shap_values[1][0],pd.DataFrame([feature_values], columns=feature_names),matplotlib=True)
-else:
-    shap.force_plot(explainer_shap.expected_value[0], shap_values[0][0],pd.DataFrame([feature_values], columns=feature_names),
-                    matplotlib=True)
+
+explainer = shap.KernelExplainer(model.predict_proba, shap.sample(X_train_sel, 1))  
+    
+    # Calculate SHAP values  
+shap_values = explainer.shap_values(X_test)  
+shap_values2 = explainer(X_test)[:, :, 1]  
+    
+print('shap_values:', np.array(shap_values).shape)  
+print('shap_values2:', explainer(X_train_sel).shape)
+
+shap.force_plot(explainer.expected_value[0], shap_values[0][0], X_test.iloc[0, :], matplotlib=True)  
+
 plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
 st.image("shap_force_plot.png", caption='SHAP Force Plot Explanation')
